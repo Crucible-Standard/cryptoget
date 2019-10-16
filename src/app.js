@@ -7,7 +7,6 @@ const bodyParser = require('body-parser');
 const moment = require('moment');
 const request = require('superagent');
 const pkjson = require('../package.json');
-const facts = require('./models/facts');
 
 const app = express();
 
