@@ -1,0 +1,33 @@
+{
+  "name": "cryptoget",
+  "version": "0.1.0",
+  "description": "a simply api that returns the exchange rate between USD and Token",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wh-iterabb-it/cryptoget"
+  },
+  "bugs": {
+    "url": "https://github.com/wh-iterabb-it/cryptoget/issues"
+  },
+  "homepage": "https://github.com/wh-iterabb-it/cryptoget#readme",
+  "license": "GPL-3.0",
+  "scripts": {
+    "cover": "nyc npm test && nyc report --reporter=text-lcov > coverage.lcov && ./node_modules/.bin/codecov",
+    "start": "node ./src/app.js",
+    "test": "node_modules/.bin/mocha test/. --recursive"
+  },
+  "dependencies": {
+    "chai-http": "4.3.0",
+    "express": "4.17.1",
+    "helmet": "3.21.1",
+    "moment": "2.24.0",
+    "server-side-tools": "git+https://github.com/wh-iterabb-it/server-side-tools.git",
+    "superagent": "5.1.0"
+  },
+  "devDependencies": {
+    "chai": "4.2.0",
+    "codecov": "3.6.0",
+    "mocha": "6.2.1",
+    "nyc": "14.1.1"
+  }
+}
