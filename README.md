@@ -12,9 +12,6 @@ cryptoget
 
 a simply api that returns the exchange rate between USD and Token
 
-### Documentation
-[!https://raw.githubusercontent.com/swagger-api/swagger.io/wordpress/images/assets/SW-logo-clr.png](https://app.swaggerhub.com/apis/whiterabbit8/cryptoget/1.0.0)
-
 
 ### Installation
 
