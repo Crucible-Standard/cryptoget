@@ -61,4 +61,4 @@ function getSingle (req) {
   });
   }
 
-module.exports = {getSingle}
+module.exports = {formatPast, getSingle}

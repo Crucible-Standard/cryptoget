@@ -9,7 +9,7 @@ describe('Main', () => {
   /**
    * Test for root route, with GET request
   **/
-  describe('/GET weather', () => {
+  describe('/GET coin', () => {
     it('it should have successful GET from /', (done) => {
       chai.request(app)
         .get('/')
@@ -28,5 +28,4 @@ describe('Main', () => {
       });
     });
   });
-
 });
