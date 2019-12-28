@@ -7,10 +7,19 @@ chai.use(chaiHttp);
 
 describe('Main', () => {
   /**
-   * Test for health route, with GET request
+   * Test for root route, with GET request
   **/
-  describe('/GET health', () => {
-    it('it should have successful GET', (done) => {
+  describe('/GET weather', () => {
+    it('it should have successful GET from /', (done) => {
+      chai.request(app)
+        .get('/')
+        .end((err, res) => {
+          res.should.have.status(200);
+          done();
+      });
+    });
+
+    it('it should have successful GET from /health', (done) => {
       chai.request(app)
         .get('/health')
         .end((err, res) => {
@@ -19,4 +28,5 @@ describe('Main', () => {
       });
     });
   });
+
 });

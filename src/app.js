@@ -1,33 +1,26 @@
+require('newrelic');
 const logger = require('server-side-tools').logger;
 const format = require('server-side-tools').format;
 const sanitize = require('server-side-tools').sanitize;
 const express = require('express');
 const helmet = require('helmet');
 const bodyParser = require('body-parser');
-const moment = require('moment');
 const request = require('superagent');
 const pkjson = require('../package.json');
 
+const coin = require('./models');
+
 const app = express();
 
-/**
- * formatPast
- * takes a time stamp from the past and calculates the hh:mm:ss it was in the past
- * @param {string} intDate - a time stamp in the past in seconds
- */
-function formatPast(intDate) {
-  const timestamp = moment.unix(intDate);
-  const now = moment.unix(new Date().getTime() / 1000);
-  const difference = now.diff(timestamp);
-  const duration = moment.duration(difference);
-  return Math.floor(duration.asHours()) + moment.utc(difference).format(':mm:ss');
-}
+let requestsCount = 0;
 
 // adding helmet to enhance api security
 app.use(helmet());
 
 // using bodyParser to parse json bodies into js objects
 app.use(bodyParser.json());
+
+app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
 /** set up cors middleware
  * @param {Request} req - Express request object
@@ -43,6 +36,21 @@ app.use((req, res, next) => {
 
 logger.info('turning on app...');
 
+/**
+ * This will be reserved for slack intigration
+ * @param {Request} req - Express request object
+ * @param {Response} res - Express response object
+ * @param {Next} next - Express Next object
+ */
+app.post('/slack', (req, res, next) => {
+  requestsCount++;
+  logger.info(`/slack POST request from ${req.headers['x-forwarded-for'] || req.connection.remoteAddress || req.ip}`);
+  coin.getSingle(req).then((response) => {
+    res.status(200).send({ response_type: 'in_channel', text: response });
+  }).catch((error) => {
+    res.status(400).send({ response_type: 'in_channel', text: response });
+  });
+});
 
 /**
  * @param {Request} req - Express request object
@@ -50,45 +58,13 @@ logger.info('turning on app...');
  * @param {Next} next - Express Next object
  */
 app.get('/', (req, res, next) => {
-  if ((req.query.token) && req.query.token.length > 0) {
-    const args = req.query.token;
-    const apiUrl = 'https://www.worldcoinindex.com/apiservice/ticker';
-    const coin = sanitize(args.substring(0, 3));
-    // World Coin Index API Key, get your key from
-    // https://www.worldcoinindex.com/apiservice/
-    if (process.env.KL_WCI_API_KEY < 1) {
-      logger.warn('World Coin Index API key is missing, Please add an API key to the configuration file.');
-      res.status(403).send({ error: "API Key is missing, Please add an API key to the configuration" });
-    }
-    const url = `${apiUrl}?key=${process.env.KL_WCI_API_KEY}&label=${coin}btc&fiat=usd`;
-
-    try {
-      request.get(url).then((response) => {
-        if (response.status === 200) {
-          const json = response.body;
-          if (typeof json.Markets === 'undefined' || typeof json.error !== 'undefined') {
-            logger.error(`undefined in json.markets: ${json.error}`);
-            res.status(400).send({ error: 'Are you trying to make me crash?' });
-          } else {
-            const price =  format.formatMoney(json.Markets[0].Price);
-            const label = json.Markets[0].Label.substring(0, 3);
-            const name = json.Markets[0].Name;
-            const volume = format.formatMoney(json.Markets[0].Volume_24h);
-            const lastTrade = formatPast(json.Markets[0].Timestamp);
-            let returnString = `1 ${label} = ${price} USD as of ${lastTrade} ago\n\r`;
-            returnString = returnString + `24 Hour Volume ${volume} USD\n\r`;
-            returnString = returnString + `${name} https://www.worldcoinindex.com/coin/${name}`;
-            res.status(200).send({ data: returnString });
-          }
-        }
-      });
-    } catch (error) {
-      logger.error(error);
-      res.status(400).send({ error: 'Are you trying to make me crash?' });
-    }
-  } else {
-  res.status(200).send({ data: `Please use the endpoint with a get param of 'token'. example https://cryptoget.herokuapp.com/?token=eth` });
-  }
+  requestsCount++;
+  logger.info(`/ GET request from ${req.headers['x-forwarded-for'] || req.connection.remoteAddress || req.ip}`);
+  coin.getSingle(req).then((response) => {
+    res.status(200).send({ data: response });
+  }).catch((error) => {
+    res.status(400).send({ error: response });
+  });
 });
 
 /**
@@ -97,9 +73,11 @@ app.get('/', (req, res, next) => {
  * @param {Next} next - Express Next object
  */
 app.get('/health', (req, res, next) => {
+  requestsCount++;
   const time = process.uptime();
   const uptime = format.toDDHHMMSS(time + '');
-  res.status(200).send({ data: {uptime: uptime, version: pkjson.version} });
+  logger.info(`/health GET request from ${req.headers['x-forwarded-for'] || req.connection.remoteAddress || req.ip}`);
+  res.status(200).send({ data: {uptime: uptime, version: pkjson.version, requests: requestsCount} });
 });
 
 // heroku dynamically assigns your app a port, so you can't set the port to a fixed number.
