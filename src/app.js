@@ -37,6 +37,19 @@ app.use((req, res, next) => {
 logger.info('turning on app...');
 
 /**
+ * @param {Request} req - Express request object
+ * @param {Response} res - Express response object
+ * @param {Next} next - Express Next object
+ */
+app.get('/health', (req, res, next) => {
+  requestsCount++;
+  const time = process.uptime();
+  const uptime = format.toDDHHMMSS(time + '');
+  logger.info(`/health GET request from ${req.headers['x-forwarded-for'] || req.connection.remoteAddress || req.ip}`);
+  res.status(200).send({ data: {uptime: uptime, version: pkjson.version, requests: requestsCount} });
+});
+
+/**
  * This will be reserved for slack intigration
  * @param {Request} req - Express request object
  * @param {Response} res - Express response object
@@ -65,19 +78,6 @@ app.get('/', (req, res, next) => {
   }).catch((error) => {
     res.status(400).send({ error: response });
   });
-});
-
-/**
- * @param {Request} req - Express request object
- * @param {Response} res - Express response object
- * @param {Next} next - Express Next object
- */
-app.get('/health', (req, res, next) => {
-  requestsCount++;
-  const time = process.uptime();
-  const uptime = format.toDDHHMMSS(time + '');
-  logger.info(`/health GET request from ${req.headers['x-forwarded-for'] || req.connection.remoteAddress || req.ip}`);
-  res.status(200).send({ data: {uptime: uptime, version: pkjson.version, requests: requestsCount} });
 });
 
 // heroku dynamically assigns your app a port, so you can't set the port to a fixed number.

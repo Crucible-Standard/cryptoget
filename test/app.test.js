@@ -19,6 +19,15 @@ describe('Main', () => {
       });
     });
 
+    it('it should have successful POST from /slack', (done) => {
+      chai.request(app)
+        .post('/slack')
+        .end((err, res) => {
+          res.should.have.status(200);
+          done();
+      });
+    });
+
     it('it should have successful GET from /health', (done) => {
       chai.request(app)
         .get('/health')
