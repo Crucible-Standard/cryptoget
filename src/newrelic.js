@@ -9,7 +9,7 @@ exports.config = {
   /**
    * Array of application names.
    */
-  app_name: ['Meteorology API'],
+  app_name: ['Cryptoget API'],
   /**
    * Your New Relic license key.
    */
