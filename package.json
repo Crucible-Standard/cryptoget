@@ -23,7 +23,7 @@
     "moment": "2.25.3",
     "newrelic": "^6.2.0",
     "server-side-tools": "git+https://github.com/wh-iterabb-it/server-side-tools.git",
-    "superagent": "5.2.1"
+    "superagent": "5.2.2"
   },
   "devDependencies": {
     "chai": "4.2.0",
