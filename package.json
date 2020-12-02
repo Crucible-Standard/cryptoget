@@ -21,7 +21,7 @@
     "express": "4.17.1",
     "helmet": "3.22.0",
     "moment": "2.27.0",
-    "newrelic": "^6.9.0",
+    "newrelic": "^7.0.2",
     "server-side-tools": "git+https://github.com/wh-iterabb-it/server-side-tools.git",
     "superagent": "5.2.2"
   },
