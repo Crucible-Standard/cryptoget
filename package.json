@@ -19,7 +19,7 @@
   "dependencies": {
     "chai-http": "4.3.0",
     "express": "4.17.1",
-    "helmet": "3.22.0",
+    "helmet": "4.2.0",
     "moment": "2.29.1",
     "server-side-tools": "git+https://github.com/wh-iterabb-it/server-side-tools.git",
     "superagent": "5.2.2"
