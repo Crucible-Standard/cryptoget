@@ -21,7 +21,7 @@
     "express": "4.17.1",
     "helmet": "4.2.0",
     "moment": "2.27.0",
-    "server-side-tools": "git+https://github.com/wh-iterabb-it/server-side-tools.git",
+    "sst": "git+https://github.com/wh-iterabb-it/sst.git",
     "superagent": "5.2.2"
   },
   "devDependencies": {
