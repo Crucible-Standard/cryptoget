@@ -1,7 +1,7 @@
 const request = require('superagent');
-const logger = require('server-side-tools').logger;
-const format = require('server-side-tools').format;
-const sanitize = require('server-side-tools').sanitize;
+const logger = require('sst').logger;
+const format = require('sst').format;
+const sanitize = require('sst').sanitize;
 const moment = require('moment');
 
 
