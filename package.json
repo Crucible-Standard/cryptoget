@@ -20,7 +20,7 @@
     "chai-http": "4.3.0",
     "express": "4.17.1",
     "helmet": "4.4.1",
-    "moment": "2.27.0",
+    "moment": "2.29.3",
     "sst": "git+https://github.com/wh-iterabb-it/sst.git",
     "superagent": "6.1.0"
   },
