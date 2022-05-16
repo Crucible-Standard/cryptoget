@@ -1,33 +1,40 @@
 {
   "name": "cryptoget",
-  "version": "0.3.0",
+  "version": "0.4.1",
   "description": "a simply api that returns the exchange rate between USD and Token",
   "repository": {
     "type": "git",
-    "url": "https://github.com/wh-iterabb-it/cryptoget"
+    "url": "https://github.com/Crucible-Standard/cryptoget"
   },
   "bugs": {
-    "url": "https://github.com/wh-iterabb-it/cryptoget/issues"
+    "url": "https://github.com/Crucible-Standard/cryptoget/issues"
   },
-  "homepage": "https://github.com/wh-iterabb-it/cryptoget#readme",
+  "homepage": "https://github.com/Crucible-Standard/cryptoget#readme",
   "license": "GPL-3.0",
   "scripts": {
     "cover": "nyc npm test && nyc report --reporter=text-lcov > coverage.lcov && ./node_modules/.bin/codecov",
     "start": "node ./src/app.js",
-    "test": "node_modules/.bin/mocha test/. --recursive"
+    "test": "node_modules/.bin/mocha tests/. --recursive",
+    "test:lint": "eslint .",
+    "test:lint:fix": "eslint . --fix --ignore-pattern polyfills"
   },
   "dependencies": {
-    "chai-http": "4.3.0",
-    "express": "4.17.1",
+    "express": "4.18.1",
     "helmet": "4.4.1",
-    "moment": "2.27.0",
+    "moment": "^2.29.3",
     "sst": "git+https://github.com/wh-iterabb-it/sst.git",
     "superagent": "6.1.0"
   },
   "devDependencies": {
+    "chai-http": "4.3.0",
     "chai": "4.3.3",
-    "codecov": "3.8.1",
-    "mocha": "8.3.1",
+    "codecov": "3.8.3",
+    "eslint": "8.15.0",
+    "eslint-config-prettier": "8.5.0",
+    "eslint-plugin-import": "2.26.0",
+    "eslint-plugin-prettier": "4.0.0",
+    "mocha": "10.0.0",
+    "prettier": "2.6.2",
     "nyc": "15.1.0"
   }
 }
