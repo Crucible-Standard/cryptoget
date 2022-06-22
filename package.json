@@ -23,7 +23,7 @@
     "helmet": "5.0.2",
     "moment": "^2.29.3",
     "sst": "git+https://github.com/wh-iterabb-it/sst.git",
-    "superagent": "7.1.3"
+    "superagent": "7.1.6"
   },
   "devDependencies": {
     "chai-http": "4.3.0",
