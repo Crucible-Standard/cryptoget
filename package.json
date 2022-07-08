@@ -21,7 +21,7 @@
   "dependencies": {
     "express": "4.18.1",
     "helmet": "5.0.2",
-    "moment": "^2.29.3",
+    "moment": "^2.29.4",
     "sst": "git+https://github.com/wh-iterabb-it/sst.git",
     "superagent": "7.1.3"
   },
