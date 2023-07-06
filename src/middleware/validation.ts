@@ -1,6 +1,5 @@
 import { NextFunction, Request, Response } from "express";
 
-
 /**
  * @description Middleware function to Check to see if the token is valid, Is at least 3 characters long, and exists in the request
  * @param {Request} request -  Express Request Object used to get token from body.text if POST/slack, or query.token if GET request
@@ -57,6 +56,5 @@ function validateTokenMiddleware(
     });
   }
 }
-
 
 export { validateTokenMiddleware };
