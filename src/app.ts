@@ -7,6 +7,9 @@ import { default as logger } from "./utils/logger";
 import { corsMiddleware } from "./middleware/cors";
 import { validateTokenMiddleware } from "./middleware/validation";
 
+import dotenv from "dotenv";
+dotenv.config();
+
 const PORT = process.env.PORT || 5000;
 
 interface Controller {

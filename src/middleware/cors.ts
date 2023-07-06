@@ -9,7 +9,7 @@ import { NextFunction, Request, Response } from "express";
  * @param {Request} request - Express request object
  * @param {Response} response - Express response object
  * @param {NextFunction} next - Express next function
- */
+ **/
 function corsMiddleware(
   request: Request,
   response: Response,
@@ -25,7 +25,7 @@ function corsMiddleware(
     "Accept, Authorization, Content-Type, Origin, X-Requested-With"
   );
   // only allow GET method requests
-  response.header("Access-Control-Allow-Methods", "GET");
+  response.header("Access-Control-Allow-Methods", "GET, POST");
   next();
 }
 

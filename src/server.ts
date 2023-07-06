@@ -1,12 +1,12 @@
 import App from "./app";
 
 import HealthCheckController from "./controllers/health";
-import LunarController from "./controllers/lunar";
+import MainController from "./controllers/main";
 import SlackController from "./controllers/slack";
 
 const app = new App([
   new HealthCheckController(),
-  new LunarController(),
+  new MainController(),
   new SlackController(),
 ]);
 
