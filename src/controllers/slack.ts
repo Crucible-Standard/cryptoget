@@ -2,7 +2,6 @@ import * as express from "express";
 import { DefaultController } from "./";
 import { getSingle } from "../models/main";
 
-
 class SlackController extends DefaultController {
   constructor() {
     super("/slack");

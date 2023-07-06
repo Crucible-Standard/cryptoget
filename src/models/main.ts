@@ -1,4 +1,4 @@
-import fetch from 'node-fetch';
+import fetch from "node-fetch";
 import { formatMoney, formatPast } from "../utils/format";
 import { default as logger } from "../utils/logger";
 
@@ -22,31 +22,86 @@ interface CryptoGetSlackResponse {
   text: string;
 }
 
- function getSingle(token: string): Promise<string> {
+/**
+ * getSingle
+ * @description Get price of a single Crypto token in USD based on last trade value from WorldCoinIndex
+ * @param {string} token - 3 letter crypto token name (BTC, ETH, LTC, etc)
+ * @returns {<Promise<CryptoGetResponse>>} price of token in USD
+ **/
+function getSingle(token: string): Promise<CryptoGetResponse> {
   const apiUrl = "https://www.worldcoinindex.com/apiservice/ticker";
   const url = `${apiUrl}?key=${process.env.KL_WCI_API_KEY}&label=${token}btc&fiat=usd`;
-  return new Promise(async (resolve, reject) => {
-    try {
-      const response = await fetch(url);
-      const data = await response.json();
-      const unformatted_price = data.body.Markets[0].Price;
-      const price = formatMoney(unformatted_price);
-      // const label = data.body.Markets[0].Label.substring(0, 3);
-      // const name = data.body.Markets[0].Name;
-      // const volume = formatMoney(data.body.Markets[0].Volume_24h);
-      // const lastTrade = formatPast(data.body.Markets[0].Timestamp);
-      // let returnString = `1 ${label} = USD as of ${lastTrade} ago\n\r`;
-      // returnString = returnString + `24 Hour Volume ${volume} USD\n\r`;
-      // returnString =
-      //   returnString +
-      //   `${name} https://www.worldcoinindex.com/coin/${name}`;
-      resolve(`${price}`);
-
-    } catch (error) {
-      logger.error(error);
-      reject("Are you trying to make me crash?");
-    }
-  });
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+    const unformatted_price = data.body.Markets[0].Price;
+    const price = formatMoney(unformatted_price);
+    const label = data.body.Markets[0].Label.substring(0, 3);
+    const name = data.body.Markets[0].Name;
+    const volume = formatMoney(data.body.Markets[0].Volume_24h);
+    const lastTrade = formatPast(data.body.Markets[0].Timestamp);
+    let returnString = `1 ${label} = ${price} USD as of ${lastTrade} ago\n\r`;
+    returnString = returnString + `24 Hour Volume ${volume} USD\n\r`;
+    returnString =
+      returnString + `${name} https://www.worldcoinindex.com/coin/${name}`;
+    return {
+      data: {
+        message: returnString,
+        price: price,
+        token: label,
+      },
+      meta: {
+        status: 200,
+      },
+    };
+  } catch (error) {
+    logger.error(error);
+    return {
+      data: {
+        message: "Are you sure that is a valid token?",
+        price: "0",
+        token: token,
+      },
+      meta: {
+        status: 200,
+      },
+    };
+  }
 }
 
-export { getSingle };
+/**
+ * getSingleSlack
+ * @description Get price of a single Crypto token in USD based on last trade value from WorldCoinIndex
+ * @param {string} token 3 letter crypto token name (BTC, ETH, LTC, etc)
+ * @returns {<Promise<CryptoGetSlackResponse>>} price of token in USD
+ **/
+async function getSingleSlack(token: string): Promise<CryptoGetSlackResponse> {
+  const apiUrl = "https://www.worldcoinindex.com/apiservice/ticker";
+  const url = `${apiUrl}?key=${process.env.KL_WCI_API_KEY}&label=${token}btc&fiat=usd`;
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+    const unformatted_price = data.body.Markets[0].Price;
+    const price = formatMoney(unformatted_price);
+    const label = data.body.Markets[0].Label.substring(0, 3);
+    const name = data.body.Markets[0].Name;
+    const volume = formatMoney(data.body.Markets[0].Volume_24h);
+    const lastTrade = formatPast(data.body.Markets[0].Timestamp);
+    let returnString = `1 ${label} = ${price} USD as of ${lastTrade} ago\n\r`;
+    returnString = returnString + `24 Hour Volume ${volume} USD\n\r`;
+    returnString =
+      returnString + `${name} https://www.worldcoinindex.com/coin/${name}`;
+    return {
+      response_type: "in_channel",
+      text: returnString,
+    };
+  } catch (error) {
+    logger.error(error);
+    return {
+      response_type: "in_channel",
+      text: "Are you trying to make me crash?",
+    };
+  }
+}
+
+export { getSingleSlack, getSingle };

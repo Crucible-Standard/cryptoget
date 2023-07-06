@@ -2,7 +2,6 @@ import * as express from "express";
 import { DefaultController } from "./";
 import { getSingle } from "../models/main";
 
-
 class MainController extends DefaultController {
   constructor() {
     super("/");

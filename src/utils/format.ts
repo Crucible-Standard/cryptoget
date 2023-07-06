@@ -44,7 +44,7 @@ function formatMoney(unformattedMoney: any): string {
  * formatPast
  * takes a time stamp from the past and calculates the hh:mm:ss it was in the past
  * @param {string} intDate - a time stamp in the past in seconds
- */
+ **/
 function formatPast(intDate: any) {
   const timestamp = moment.unix(intDate);
   const now = moment.unix(new Date().getTime() / 1000);
