@@ -31,7 +31,7 @@
     "express": "^4.19.2",
     "moment": "^2.29.4",
     "node-fetch": "^3.3.2",
-    "ts-node": "10.9.1",
+    "ts-node": "10.9.2",
     "typescript": "5.2.2",
     "winston": "^3.13.0"
   },
