@@ -28,12 +28,12 @@ interface CryptoGetSlackResponse {
  * @param {string} token - 3 letter crypto token name (BTC, ETH, LTC, etc)
  * @returns {<Promise<CryptoGetResponse>>} price of token in USD
  **/
-function getSingle(token: string): Promise<CryptoGetResponse> {
+async function getSingle(token: string): Promise<CryptoGetResponse> {
   const apiUrl = "https://www.worldcoinindex.com/apiservice/ticker";
   const url = `${apiUrl}?key=${process.env.KL_WCI_API_KEY}&label=${token}btc&fiat=usd`;
   try {
     const response = await fetch(url);
-    const data = await response.json();
+    const data: any = await response.json();
     const unformatted_price = data.body.Markets[0].Price;
     const price = formatMoney(unformatted_price);
     const label = data.body.Markets[0].Label.substring(0, 3);
@@ -80,7 +80,7 @@ async function getSingleSlack(token: string): Promise<CryptoGetSlackResponse> {
   const url = `${apiUrl}?key=${process.env.KL_WCI_API_KEY}&label=${token}btc&fiat=usd`;
   try {
     const response = await fetch(url);
-    const data = await response.json();
+    const data:any = await response.json();
     const unformatted_price = data.body.Markets[0].Price;
     const price = formatMoney(unformatted_price);
     const label = data.body.Markets[0].Label.substring(0, 3);
