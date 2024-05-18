@@ -14,7 +14,7 @@ a simply api that returns the exchange rate between USD and Token
 example usage:
 
 ```
-https://cryptoget.heroku.com/?token=eth
+https://cryptoget.herokuapp.com/?token=eth
 ```
 
 
