@@ -26,6 +26,7 @@ class MainController extends DefaultController {
           status: 400,
         },
       });
+      return;
     }
     const token = `${request.query.token}` || `${request.body.text}`;
     const data = await getSingle(token);
