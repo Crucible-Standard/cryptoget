@@ -30,10 +30,10 @@ class SlackController extends DefaultController {
     }
     const token = `${request.query.token}` || `${request.body.text}`;
     const data = await getSingle(token);
-
+    const dataString = await data.data.message;
     response.status(200).send({
       response_type: "in_channel",
-      text: `${data.data.message}`,
+      text: `${dataString}`,
     });
   };
 }
