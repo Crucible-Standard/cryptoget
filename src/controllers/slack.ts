@@ -12,15 +12,16 @@ class SlackController extends DefaultController {
     this.router.all(this.path, this.getSlackResponseRandom);
   }
 
-  private getSlackResponseRandom = (
+  private getSlackResponseRandom = async (
     request: express.Request,
     response: express.Response
   ) => {
     const token = `${request.query.token}` || `${request.body.text}`;
-    const price = getSingle(token);
+    const data = await getSingle(token);
+
     response.status(200).send({
       response_type: "in_channel",
-      text: `The price of ${token} is $${price}USD`,
+      text: `${data.data.message}`,
     });
   };
 }

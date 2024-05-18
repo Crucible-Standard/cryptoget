@@ -12,23 +12,14 @@ class MainController extends DefaultController {
     this.router.all(this.path, this.getMainResponse);
   }
 
-  private getMainResponse = (
+  private getMainResponse = async (
     request: express.Request,
     response: express.Response
   ) => {
     const token = `${request.query.token}` || `${request.body.text}`;
-    const price = getSingle(token);
+    const data = await getSingle(token);
 
-    response.status(200).send({
-      data: {
-        message: `The price of ${token} is $${price}USD`,
-        price: price,
-        token: token,
-      },
-      meta: {
-        status: 200,
-      },
-    });
+    response.status(200).send(data);
   };
 }
 

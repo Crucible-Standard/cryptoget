@@ -1,10 +1,14 @@
 import fetch from "node-fetch";
+
 import { formatMoney, formatPast } from "../utils/format";
 import { default as logger } from "../utils/logger";
 
 interface ResponseData {
+  name: string;
   message: string;
   price: string;
+  volume: string;
+  lastTrade: string;
   token: string;
 }
 
@@ -34,38 +38,51 @@ async function getSingle(token: string): Promise<CryptoGetResponse> {
   try {
     const response = await fetch(url);
     const data: any = await response.json();
-    const unformatted_price = data.body.Markets[0].Price;
-    const price = formatMoney(unformatted_price);
-    const label = data.body.Markets[0].Label.substring(0, 3);
-    const name = data.body.Markets[0].Name;
-    const volume = formatMoney(data.body.Markets[0].Volume_24h);
-    const lastTrade = formatPast(data.body.Markets[0].Timestamp);
+    logger.info(JSON.stringify(data));
+    const unformatted_price = data.Markets[0].Price;
+    const price: string = unformatted_price.toFixed(2);
+    logger.info(price);
+    const label = data.Markets[0].Label.substring(0, 3);
+    const name = data.Markets[0].Name;
+    const volume = formatMoney(data.Markets[0].Volume_24h);
+    const lastTrade = formatPast(data.Markets[0].Timestamp);
     let returnString = `1 ${label} = ${price} USD as of ${lastTrade} ago\n\r`;
     returnString = returnString + `24 Hour Volume ${volume} USD\n\r`;
     returnString =
       returnString + `${name} https://www.worldcoinindex.com/coin/${name}`;
-    return {
-      data: {
-        message: returnString,
-        price: price,
-        token: label,
-      },
-      meta: {
-        status: 200,
-      },
-    };
+
+    return new Promise((resolve, reject) => {
+      resolve({
+        data: {
+          message: returnString,
+          price: price,
+          volume: volume,
+          lastTrade: lastTrade,
+          name: name,
+          token: label,
+        },
+        meta: {
+          status: 200,
+        },
+      });
+    });
   } catch (error) {
     logger.error(error);
-    return {
-      data: {
-        message: "Are you sure that is a valid token?",
-        price: "0",
-        token: token,
-      },
-      meta: {
-        status: 200,
-      },
-    };
+    return new Promise((resolve, reject) => {
+      resolve({
+        data: {
+          message: "Are you sure that is a valid token?",
+          price: "0",
+          token: token,
+          volume: "",
+          lastTrade: "",
+          name: "",
+        },
+        meta: {
+          status: 200,
+        },
+      });
+    });
   }
 }
 
@@ -81,12 +98,12 @@ async function getSingleSlack(token: string): Promise<CryptoGetSlackResponse> {
   try {
     const response = await fetch(url);
     const data: any = await response.json();
-    const unformatted_price = data.body.Markets[0].Price;
+    const unformatted_price = data.Markets[0].Price;
     const price = formatMoney(unformatted_price);
-    const label = data.body.Markets[0].Label.substring(0, 3);
-    const name = data.body.Markets[0].Name;
-    const volume = formatMoney(data.body.Markets[0].Volume_24h);
-    const lastTrade = formatPast(data.body.Markets[0].Timestamp);
+    const label = data.Markets[0].Label.substring(0, 3);
+    const name = data.Markets[0].Name;
+    const volume = formatMoney(data.Markets[0].Volume_24h);
+    const lastTrade = formatPast(data.Markets[0].Timestamp);
     let returnString = `1 ${label} = ${price} USD as of ${lastTrade} ago\n\r`;
     returnString = returnString + `24 Hour Volume ${volume} USD\n\r`;
     returnString =
