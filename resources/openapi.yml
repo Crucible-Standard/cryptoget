@@ -1,0 +1,121 @@
+openapi: 3.0.3
+info:
+  title: Crucible Standard Finance - CryptoGet API
+  description: |-
+    a simply api that returns the exchange rate between USD and Token
+
+    _You can contribute to this open source API on github [here](https://github.com/Crucible-Standard/cryptoget)._
+    
+    Some useful links:
+    - [The CryptoGet API Github Repository](https://github.com/Crucible-Standard/cryptoget)
+    - [The source API definition for the CryptoGet API](https://github.com/Crucible-Standard/cryptoget/blob/main/resources/openapi.yaml)
+  termsOfService: https://github.com/Crucible-Standard/.github/blob/main/docs/CODE_OF_CONDUCT.md
+  contact:
+    email: apiteam@swagger.io
+  license:
+    name: GNU General Public License v3.0
+    url: https://github.com/Crucible-Standard/cryptoget/tree/main/.github/LICENSE
+  version: 0.6.0
+servers:
+  - url: https://cryptoget.herokuapp.com/
+paths:
+  /:
+    get:
+      summary: Returns the Price in USD, 24 hour Trade Volume in USD, and time since the last trade.
+      description: GET requests to the root endpoint will get a RESTful json response
+      operationId: getSingle
+      parameters:
+        - name: token
+          in: query
+          description: the 3 character Token value of the crypto currency
+          required: true
+          example: "ETH"
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/Data'
+        '400':
+          description: Invalid status value
+  /slack:
+    get:
+      summary: Returns the Price in USD, 24 hour Trade Volume in USD, and time since the last trade.
+      description: GET requests to the slack endpoint will get a slack compliant RESTful json response
+      operationId: getSingleSlackGet
+      parameters:
+        - name: token
+          in: query
+          description: the 3 character Token value of the crypto currency
+          required: true
+          example: "ETH"
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/SlackData'
+    post:
+      summary: Returns the Price in USD, 24 hour Trade Volume in USD, and time since the last trade.
+      description: POST requests to the slack endpoint require a body.text, will get a slack compliant RESTful json response
+      operationId: getSingleSlackPost
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/SlackData'
+        '400':
+          description: Invalid status value
+components:
+  schemas:
+    Data:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            message:
+              type: string
+              example: "1 ETH = 3111.54 USD as of -1:01:20 ago\n\r24 Hour Volume $3,469,363,082.53 USD\n\rEthereum https://www.worldcoinindex.com/coin/Ethereum"
+            name:
+              type: string
+              example: "Ethereum"
+            price:
+              type: string
+              example: "3111.54"
+            volume:
+              type: string
+              example: "$3,469,363,082.53"
+            lastTrade:
+              type: string
+              example: "-1:01:20"
+        meta:
+          type: object
+          properties:
+            status:
+              type: string
+              example: "200"
+    SlackData:
+      type: object
+      properties:
+        response_type:
+          type: string
+          example: "in_channel"
+        text:
+          type: string
+          example: "1 ETH = 3111.54 USD as of -1:01:20 ago\n\r24 Hour Volume $3,469,363,082.53 USD\n\rEthereum https://www.worldcoinindex.com/coin/Ethereum"
+   

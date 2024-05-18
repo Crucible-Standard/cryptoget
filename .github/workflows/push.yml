@@ -10,11 +10,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checking Out Commits Securely . . .
-        uses: actions/checkout@v2
-      - name: Setup Node 16 Environment . . .
-        uses: actions/setup-node@v3
+        uses: actions/checkout@v4
+      - name: Setup Node 20 Environment . . .
+        uses: actions/setup-node@v4
         with:
-          node-version: 16
+          node-version: 20
       - name: Install Dependencies . . .
         working-directory: .
         run: npm ci
@@ -27,11 +27,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checking Out Commits Securely . . .
-        uses: actions/checkout@v2
-      - name: Setup Node 16 Environment . . .
-        uses: actions/setup-node@v3
+        uses: actions/checkout@v4
+      - name: Setup Node 20 Environment . . .
+        uses: actions/setup-node@v4
         with:
-          node-version: 16
+          node-version: 20
       - name: Install Dependencies . . .
         working-directory: .
         run: npm ci
@@ -44,11 +44,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checking Out Commits Securely . . .
-        uses: actions/checkout@v2
-      - name: Setup Node 16 Environment . . .
-        uses: actions/setup-node@v3
+        uses: actions/checkout@v4
+      - name: Setup Node 20 Environment . . .
+        uses: actions/setup-node@v4
         with:
-          node-version: 16
+          node-version: 20
       - name: Install Dependencies . . .
         working-directory: .
         run: npm ci
