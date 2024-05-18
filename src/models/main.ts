@@ -48,7 +48,6 @@ async function getSingle(token: string): Promise<CryptoGetResponse> {
     returnString =
       returnString + `${name} https://www.worldcoinindex.com/coin/${name}`;
 
-    
     return new Promise((resolve, reject) => {
       resolve({
         data: {
