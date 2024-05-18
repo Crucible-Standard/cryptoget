@@ -4,8 +4,11 @@ import { formatMoney, formatPast } from "../utils/format";
 import { default as logger } from "../utils/logger";
 
 interface ResponseData {
+  name: string;
   message: string;
   price: string;
+  volume: string;
+  lastTrade: string;
   token: string;
 }
 
@@ -53,6 +56,9 @@ async function getSingle(token: string): Promise<CryptoGetResponse> {
         data: {
           message: returnString,
           price: price,
+          volume: volume,
+          lastTrade: lastTrade,
+          name: name,
           token: label,
         },
         meta: {
@@ -68,6 +74,9 @@ async function getSingle(token: string): Promise<CryptoGetResponse> {
           message: "Are you sure that is a valid token?",
           price: "0",
           token: token,
+          volume: "",
+          lastTrade: "",
+          name: "",
         },
         meta: {
           status: 200,
