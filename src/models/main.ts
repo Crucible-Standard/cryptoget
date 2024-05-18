@@ -80,7 +80,7 @@ async function getSingleSlack(token: string): Promise<CryptoGetSlackResponse> {
   const url = `${apiUrl}?key=${process.env.KL_WCI_API_KEY}&label=${token}btc&fiat=usd`;
   try {
     const response = await fetch(url);
-    const data:any = await response.json();
+    const data: any = await response.json();
     const unformatted_price = data.body.Markets[0].Price;
     const price = formatMoney(unformatted_price);
     const label = data.body.Markets[0].Label.substring(0, 3);
