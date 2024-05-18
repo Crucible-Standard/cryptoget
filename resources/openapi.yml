@@ -80,6 +80,19 @@ paths:
                   $ref: '#/components/schemas/SlackData'
         '400':
           description: Invalid status value
+  /health:
+    get:
+      summary: health check endpoint
+      operationId: healthcheck
+      description: |
+        The health check endpoint will return a status of 200 if the api is up and ready to recieve connections. It will tell the uptime, and total requests served since last restart. It also has a field for version which corresponds to the versioned release from the github repo.  
+      responses:
+        '200':
+          description: Default Health check response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/healthcheck'
 components:
   schemas:
     Data:
@@ -118,4 +131,25 @@ components:
         text:
           type: string
           example: "1 ETH = 3111.54 USD as of -1:01:20 ago\n\r24 Hour Volume $3,469,363,082.53 USD\n\rEthereum https://www.worldcoinindex.com/coin/Ethereum"
-   
+    healthcheckData:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            message:
+              type: string
+              example: "ok"
+        meta:
+          type: object
+          properties:
+            uptime:
+              type: string
+              example: '00:00:39:45'
+            version:
+              type: string
+              example: 0.4.10
+            requests:
+              type: integer
+              format: int32
+              example: 129522 
