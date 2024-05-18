@@ -13,7 +13,7 @@ function validateTokenMiddleware(
 ) {
   // World Coin Index API Key, get your key from
   // https://www.worldcoinindex.com/apiservice/
-  if (process.env.KL_WCI_API_KEY || process.env.KL_WCI_API_KEY.length < 1) {
+  if (!process.env.KL_WCI_API_KEY || process.env.KL_WCI_API_KEY.length < 1) {
     response.status(400).send({
       data: {
         message:
