@@ -1,6 +1,6 @@
 {
   "name": "cryptoget",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "a simply api that returns the exchange rate between USD and Token",
   "repository": {
     "type": "git",
