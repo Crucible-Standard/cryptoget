@@ -1,6 +1,7 @@
 import * as express from "express";
 import { DefaultController } from "./";
 import { getHealthCheck } from "../models/health";
+import logger from "../utils/logger";
 
 class HealthCheckController extends DefaultController {
   constructor() {
@@ -16,7 +17,8 @@ class HealthCheckController extends DefaultController {
     request: express.Request,
     response: express.Response
   ) => {
-    response.status(200).send(getHealthCheck());
+    const data = getHealthCheck();
+    response.status(200).send(data);
   };
 }
 
