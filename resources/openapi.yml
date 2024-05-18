@@ -134,13 +134,22 @@ components:
     healthcheckData:
       type: object
       properties:
-        uptime:
-          type: string
-          example: '00:00:39:45'
-        version:
-          type: string
-          example: 0.4.10
-        requests:
-          type: integer
-          format: int32
-          example: 129522 
+        data:
+          type: object
+          properties:
+            message:
+              type: string
+              example: "ok"
+        meta:
+          type: object
+          properties:
+            uptime:
+              type: string
+              example: '00:00:39:45'
+            version:
+              type: string
+              example: 0.4.10
+            requests:
+              type: integer
+              format: int32
+              example: 129522 
