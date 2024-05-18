@@ -92,7 +92,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/healthcheck'
+                $ref: '#/components/schemas/healthcheckData'
 components:
   schemas:
     Data:
