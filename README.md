@@ -18,6 +18,17 @@ https://cryptoget.herokuapp.com/?token=eth
 ```
 
 
+
+### Documentation
+
+<div align="center">
+  <p>
+    <a href="https://rapidapi.com/crucible-standard-crucible-standard-default/api/cryptoget/">
+      <img width="200" height="52" src="https://rapidapi.com/static-assets/default/dark-logo-78e48dc1-ca3f-4d67-a6f5-74032f439c8b.svg" />
+    </a>
+  </p>
+</div>
+
 ### Installation
 
 ```
