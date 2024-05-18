@@ -12,11 +12,12 @@ class HealthCheckController extends DefaultController {
     this.router.get(this.path, this.getHealthCheck);
   }
 
-  private getHealthCheck = (
+  private getHealthCheck = async (
     request: express.Request,
     response: express.Response
   ) => {
-    response.status(200).send(getHealthCheck());
+    const data = await getHealthCheck();
+    response.status(200).send(data);
   };
 }
 
