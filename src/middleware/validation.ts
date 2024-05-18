@@ -28,41 +28,6 @@ function validateTokenMiddleware(
       },
     });
   }
-
-  // check to see if token exists in request
-  try {
-    if (request) {
-      if (request.query.token || request.body.text) {
-        const args = `${request.query.token}` || `${request.body.text}`;
-        // check to see if token is at least 3 characters
-        if (args.length > 2) {
-          next();
-        } else {
-          logger.info("Token is invalid, Please use a valid token");
-          response.status(400).send({
-            data: {
-              message:
-                "Please use the endpoint with a get param of 'token'. example https://cryptoget.herokuapp.com/?token=eth",
-            },
-            meta: {
-              status: 400,
-            },
-          });
-        }
-      }
-    }
-  } catch (e) {
-    logger.info("Token is invalid, Please use a valid token");
-    response.status(400).send({
-      data: {
-        message:
-          "Please use the endpoint with a get param of 'token'. example https://cryptoget.herokuapp.com/?token=eth",
-      },
-      meta: {
-        status: 400,
-      },
-    });
-  }
   next();
 }
 

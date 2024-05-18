@@ -16,13 +16,28 @@ class SlackController extends DefaultController {
     request: express.Request,
     response: express.Response
   ) => {
-    const token = `${request.query.token}` || `${request.body.text}`;
-    const data = await getSingle(token);
+    if (request.query.token || request.body.text) {
+      const token = `${request.query.token}` || `${request.body.text}`;
+      // check to see if token is at least 3 characters
+      if (token.length > 2) {
+        const data = await getSingle(token);
 
-    response.status(200).send({
-      response_type: "in_channel",
-      text: `${data.data.message}`,
-    });
+        response.status(200).send({
+          response_type: "in_channel",
+          text: `${data.data.message}`,
+        });
+      } else {
+        response.status(400).send({
+          data: {
+            message:
+              "Please use the endpoint with a get param of 'token'. example https://cryptoget.herokuapp.com/?token=eth",
+          },
+          meta: {
+            status: 400,
+          },
+        });
+      }
+    }
   };
 }
 
