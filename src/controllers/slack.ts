@@ -1,6 +1,7 @@
 import * as express from "express";
 import { DefaultController } from "./";
 import { getSingle } from "../models/main";
+import logger from "../utils/logger";
 
 class SlackController extends DefaultController {
   constructor() {
@@ -17,6 +18,7 @@ class SlackController extends DefaultController {
     response: express.Response
   ) => {
     if (!request.query.token && !request.body.text) {
+      logger.info("Please use the endpoint with a get param of 'token'. example https://cryptoget.herokuapp.com/?token=eth");
       response.status(400).send({
         data: {
           message:
@@ -30,10 +32,10 @@ class SlackController extends DefaultController {
     }
     const token = `${request.query.token}` || `${request.body.text}`;
     const data = await getSingle(token);
-    const dataString = await data.data.message;
+
     response.status(200).send({
       response_type: "in_channel",
-      text: `${dataString}`,
+      text: `${data.data.message}`,
     });
   };
 }
