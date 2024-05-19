@@ -33,14 +33,13 @@ interface CryptoGetSlackResponse {
  * @returns {<Promise<CryptoGetResponse>>} price of token in USD
  **/
 async function getSingle(token: string): Promise<CryptoGetResponse> {
-  logger.info(token);
+  logger.info(`${token} requested`);
   const apiUrl = "https://www.worldcoinindex.com/apiservice/ticker";
   const url = `${apiUrl}?key=${process.env.KL_WCI_API_KEY}&label=${token}btc&fiat=usd`;
   try {
-    
+    logger.info(JSON.stringify(data));
     const response = await fetch(url);
     const data: any = await response.json();
-    logger.info(JSON.stringify(data));
     const unformatted_price = data.Markets[0].Price;
     const price: string = unformatted_price.toFixed(2);
     const label = data.Markets[0].Label.substring(0, 3);

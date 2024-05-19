@@ -31,6 +31,7 @@ class SlackController extends DefaultController {
       return;
     }
     const token = `${request.query.token}` || `${request.body.text}`;
+    logger.info(`${JSON.stringify(request)} request`);
     const data = await getSingle(token);
 
     response.status(200).send({
