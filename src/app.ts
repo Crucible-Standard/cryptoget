@@ -43,9 +43,9 @@ class App {
   private initializeMiddlewares() {
     this.app.use(helmet());
     this.app.use(compression());
-    this.app.use(bodyParser.json());
+    this.app.use(bodyParser.json()); // support json encoded bodies
+    this.app.use(express.urlencoded({ extended: true })); // support encoded bodies
     this.app.use(corsMiddleware);
-    this.app.use(validateTokenMiddleware);
   }
 
   /**
