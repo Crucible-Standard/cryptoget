@@ -2,12 +2,11 @@ import * as bodyParser from "body-parser";
 import * as express from "express";
 import helmet from "helmet";
 import compression from "compression";
-import { default as logger } from "./utils/logger";
-
-import { corsMiddleware } from "./middleware/cors";
-import { validateTokenMiddleware } from "./middleware/validation";
-
 import dotenv from "dotenv";
+
+import { default as logger } from "./utils/logger";
+import { corsMiddleware } from "./middleware/cors";
+
 dotenv.config();
 
 const PORT = process.env.PORT || 5000;
