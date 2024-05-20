@@ -24,7 +24,7 @@ https://cryptoget.herokuapp.com/?token=eth
 <div align="center">
   <p>
     <a href="https://rapidapi.com/crucible-standard-crucible-standard-default/api/cryptoget/">
-      <img src="https://rapidapi.com/uploads/blue_logo_f50bced105.svg" "/>
+      <img width="200" height="52" src="https://rapidapi.com/uploads/blue_logo_f50bced105.svg" />
     </a>
   </p>
 </div>
